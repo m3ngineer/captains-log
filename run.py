@@ -5,6 +5,7 @@ import json
 class DiscoveryGenerator():
     def __init__(self):
         self.prompts = self.load_prompts()
+        self.date = dt.datetime.now().date()
 
     def load_prompts(self):
         with open('prompts.json') as f:
@@ -20,4 +21,5 @@ if __name__ == '__main__':
     prompt = prompts.choose()
     print(prompt)
     print("What's an action that you could take to make this a reality?")
-    print(dt.datetime.now().date())
+    today = dt.datetime.now().date()
+    print('{} {}, {}'.format(today.strftime("%B"), today.strftime("%d"), today.strftime("%Y")))

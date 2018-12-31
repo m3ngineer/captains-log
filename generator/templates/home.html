@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
-{% block header_text %}Write a prompt{% endblock %}
+<!-- {% block header_text %}Write a prompt{% endblock %} -->
+
+{% block date %}{{ today_str }}{% endblock %}
+
+{% block prompt %}{{ prompt }}{% endblock %}
 
 {% block form_action %}/lists/new{% endblock %}
 
