@@ -1,8 +1,33 @@
 {% extends 'base.html' %}
 
+{% block css %}
+<style>
+  tr, td {
+    /* border: 1px solid black; */
+    padding: 6px;
+  }
+
+  .response {
+    padding: 6px 18px;
+  }
+
+  .prompt {
+    font-style: italic;
+  }
+
+  .date {
+    font-weight: bold;
+  }
+
+  .grey-bg {
+    background: #e9ecef;
+  }
+</style>
+{% endblock %}
+
 <!-- {% block header_text %}Write a prompt{% endblock %} -->
 
-{% block date %}{{ today_str }}{% endblock %}
+{% block date %}{{ today_date_lg }}{% endblock %}
 
 {% block prompt %}{{ prompt }}{% endblock %}
 
@@ -11,7 +36,13 @@ x
 {% block table %}
   <table id='response_table'>
     {% for response in responses %}
-      <tr><td>{{ forloop.counter }}: {{ response.response }}</td></tr>
+      {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
+        <td width='125' class='date'>{{ response.date }}</td>
+        <td class='prompt'>{{ response.prompt }}</td>
+      </tr>
+      {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
+        <td class='response' colspan=2>{{ response.response }}</td>
+      </tr>
     {% endfor %}
   </table>
 {% endblock %}

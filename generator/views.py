@@ -9,19 +9,14 @@ def homepage(request):
     prompts = DiscoveryGenerator()
     prompt = prompts.choose()
 
-    today = dt.datetime.now().date()
-    today_str = '{} {}, {}'.format(today.strftime("%B"),
-        today.strftime("%d"),
-        today.strftime("%Y")
-        )
-
-    today_num = today
+    today_date = dt.datetime.now().date()
+    today_date_lg = dt.datetime.strftime(today_date, '%B %d, %Y')
+    today_date_st = dt.datetime.strftime(today_date, '%y-%m-%d')
 
     if request.method == 'POST':
         Response.objects.create(response=request.POST['response_text'],
-        date=today_num,
+        date=today_date_st,
         prompt=prompt
-        # response_id=Response.id
         )
 
     responses = Response.objects.all()
@@ -29,8 +24,8 @@ def homepage(request):
     return render(request, 'home.html',
                 {'prompt':
                     prompt,
-                'today_str':
-                    today_str,
+                'today_date_lg':
+                    today_date_lg,
                 'responses':
                     responses
                 }
