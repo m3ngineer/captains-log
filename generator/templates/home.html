@@ -6,12 +6,12 @@
 
 {% block prompt %}{{ prompt }}{% endblock %}
 
-{% block form_action %}/lists/new{% endblock %}
-
+{% block form_action %}/{% endblock %}
+x
 {% block table %}
-  <table id='id_list_table'>
-    {% for item in items %}
-      <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
+  <table id='response_table'>
+    {% for response in responses %}
+      <tr><td>{{ forloop.counter }}: {{ response.response }}</td></tr>
     {% endfor %}
   </table>
 {% endblock %}
