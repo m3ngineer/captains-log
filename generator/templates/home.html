@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block header_text %}Write a prompt{% endblock %}
+
+{% block form_action %}/lists/new{% endblock %}
+
+{% block table %}
+  <table id='id_list_table'>
+    {% for item in items %}
+      <tr><td>{{ forloop.counter }}: {{ item.text }}</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}
