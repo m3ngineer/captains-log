@@ -12,16 +12,11 @@ def homepage(request):
     today_date = dt.datetime.now().date()
     today_date_lg = dt.datetime.strftime(today_date, '%B %d, %Y')
     today_date_st = dt.datetime.strftime(today_date, '%y-%m-%d')
+    responses = Response.objects.all()
 
-    if request.method == 'POST':
-        form = DailyForm(request.POST)
-        Response.objects.create(prompt=request.POST['prompt'],
-            response=request.POST['response'],
-            date=today_date_st
-            )
-    else:
-        form = DailyForm()
-        responses = Response.objects.all()
+    form = DailyForm()
+    form.fields['prompt'].widget.attrs['placeholder'] = 'Q: ' + prompt
+
     return render(request, 'home.html',
                     {'form':
                         form,

@@ -11,6 +11,10 @@
     padding: 6px 18px;
   }
 
+  .form-answer {
+    height: 100px;
+  }
+
   .prompt {
     font-style: italic;
   }
@@ -22,19 +26,27 @@
   .grey-bg {
     background: #e9ecef;
   }
+
+  .btn {
+    background-color: white
+  }
+  .btn:hover {
+    background-color: black;
+    color: white;
+  }
 </style>
 {% endblock %}
 
 {% block date %}{{ today_date_lg }}{% endblock %}
 
 {% block form %}
-  <form method='POST' action="/">
+  <form method='POST' action="/review">
     {% csrf_token %}
     {{ form.prompt }}
     <div height="125 px"><br></div>
     {{ form.response }}
     <div height="125 px"><br></div>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit" class='btn' style='border: 1px black solid'>
   </form>
 {% endblock %}
 
