@@ -29,20 +29,10 @@
 
 {% block date %}{{ today_date_lg }}{% endblock %}
 
-{% block prompt %}{{ prompt }}{% endblock %}
+{% block form_action %}/review{% endblock %}
 
-{% block form_action %}/{% endblock %}
-x
+{%block placeholder_prompt %}Q: {{ prompt }}{% endblock %}
+
 {% block table %}
-  <table id='response_table'>
-    {% for response in responses %}
-      {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
-        <td width='125' class='date'>{{ response.date }}</td>
-        <td class='prompt'>{{ response.prompt }}</td>
-      </tr>
-      {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
-        <td class='response' colspan=2>{{ response.response }}</td>
-      </tr>
-    {% endfor %}
-  </table>
+
 {% endblock %}

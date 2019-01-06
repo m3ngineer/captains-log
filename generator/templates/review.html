@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE-edge'>
+    <meta name='viewport' content=width='device-width, initial-scale=1'>
+    <title>Review</title>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/base.css" rel="stylesheet">
+    <!-- {% block css %}{% endblock %} -->
+
+    <style>
+      tr, td {
+        /* border: 1px solid black; */
+        padding: 6px;
+      }
+
+      .response {
+        padding: 6px 18px;
+      }
+
+      .prompt {
+        font-style: italic;
+      }
+
+      .date {
+        font-weight: bold;
+      }
+
+      .grey-bg {
+        background: #e9ecef;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <div class='container'>
+
+      <div class='row'>
+        <div class='col-md-8 offset-2 jumbotron'>
+          <div class='text-center'>
+
+          </div>
+        </div>
+      </div>
+
+      <div class='row'>
+        <div class='col-md-8 offset-2'>
+
+          <table id='response_table'>
+            {% for response in responses %}
+              {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
+                <td width='125' class='date'>{{ response.date }}</td>
+                <td class='prompt' contenteditable='true'>>{{ response.prompt }}</td>
+              </tr>
+              {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
+                <td class='response' colspan=2 contenteditable='true'>{{ response.response }}</td>
+              </tr>
+            {% endfor %}
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
