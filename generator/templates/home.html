@@ -25,14 +25,33 @@
 </style>
 {% endblock %}
 
-<!-- {% block header_text %}Write a prompt{% endblock %} -->
-
 {% block date %}{{ today_date_lg }}{% endblock %}
 
-{% block form_action %}/review{% endblock %}
+{% block form %}
+  <form method='POST' action="/">
+    {% csrf_token %}
+    {{ form.prompt }}
+    <div height="125 px"><br></div>
+    {{ form.response }}
+    <div height="125 px"><br></div>
+    <input type="submit" value="Submit">
+  </form>
+{% endblock %}
 
 {%block placeholder_prompt %}Q: {{ prompt }}{% endblock %}
 
 {% block table %}
+
+          <table id='response_table'>
+            {% for response in responses %}
+              {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
+                <td width='125' class='date'>{{ response.date }}</td>
+                <td class='prompt' contenteditable='true'>{{ response.prompt }}</td>
+              </tr>
+              {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
+                <td class='response' colspan=2 contenteditable='true'>{{ response.response }}</td>
+              </tr>
+            {% endfor %}
+          </table>
 
 {% endblock %}

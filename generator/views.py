@@ -5,7 +5,6 @@ import datetime as dt
 
 from .forms import DailyForm
 
-# Create your views here.
 def homepage(request):
     prompts = DiscoveryGenerator()
     prompt = prompts.choose()
@@ -14,38 +13,48 @@ def homepage(request):
     today_date_lg = dt.datetime.strftime(today_date, '%B %d, %Y')
     today_date_st = dt.datetime.strftime(today_date, '%y-%m-%d')
 
-    # if request.method == 'POST':
-    #     Response.objects.create(response_text=request.POST['response_text'],
-    #     response_prompt=request.POST['prompt_text'],
-    #     date=today_date_st
-    #     )
-    #
-    # responses = Response.objects.all()
-
     if request.method == 'POST':
         form = DailyForm(request.POST)
-        Response.objects.create(prompt=request.POST[form.prompt],
-            response=request.POST[form.response],
+        Response.objects.create(prompt=request.POST['prompt'],
+            response=request.POST['response'],
             date=today_date_st
             )
     else:
         form = DailyForm()
-
-    return render(request, 'home.html', {'form': form})
+        responses = Response.objects.all()
+    return render(request, 'home.html',
+                    {'form':
+                        form,
+                    'responses':
+                        responses,
+                    'today_date_lg':
+                        today_date_lg,
+                    'prompt':
+                        prompt
+                    })
 
 def review(request):
 
     today_date = dt.datetime.now().date()
+    today_date_lg = dt.datetime.strftime(today_date, '%B %d, %Y')
     today_date_st = dt.datetime.strftime(today_date, '%y-%m-%d')
 
     form = DailyForm(request.POST)
-    Response.objects.create(prompt=request.POST['prompt'],
-        response=request.POST['response'],
-        date=today_date_st
-        )
+
+    if request.method == 'POST':
+        # Create a new response object in model
+        Response.objects.create(prompt=request.POST['prompt'],
+            response=request.POST['response'],
+            date=today_date_st
+            )
+
+    # Collect responses
     responses = Response.objects.all()
+
     return render(request, 'review.html',
                     {'responses':
                         responses,
+                    'today_date_lg':
+                        today_date_lg,
                     }
                 )

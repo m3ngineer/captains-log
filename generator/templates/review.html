@@ -1,57 +1,43 @@
-<!DOCTYPE html>
-<html lang='en'>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE-edge'>
-    <meta name='viewport' content=width='device-width, initial-scale=1'>
-    <title>Review</title>
-    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/base.css" rel="stylesheet">
-    <!-- {% block css %}{% endblock %} -->
+{% extends 'base.html' %}
 
-    <style>
-      tr, td {
-        /* border: 1px solid black; */
-        padding: 6px;
-      }
+{% block css %}
+<style>
+  tr, td {
+    /* border: 1px solid black; */
+    padding: 6px;
+  }
 
-      .response {
-        padding: 6px 18px;
-      }
+  .response {
+    padding: 6px 18px;
+  }
 
-      .prompt {
-        font-style: italic;
-      }
+  .prompt {
+    font-style: italic;
+  }
 
-      .date {
-        font-weight: bold;
-      }
+  .date {
+    font-weight: bold;
+  }
 
-      .grey-bg {
-        background: #e9ecef;
-      }
-    </style>
-    
-  </head>
-  <body>
-    <div class='container'>
+  .grey-bg {
+    background: #e9ecef;
+  }
+</style>
+{% endblock %}
 
-      <div class='row'>
-        <div class='col-md-8 offset-2 jumbotron'>
-          <div class='text-center'>
+{% block date %}{{ today_date_lg }}{% endblock %}
 
-          </div>
-        </div>
-      </div>
+{% block form %}
+<h2>Entries</h2>
+{% endblock %}
 
-      <div class='row'>
-        <div class='col-md-8 offset-2'>
+{% block table %}
 
           <table id='response_table'>
             {% for response in responses %}
               {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
                 <td width='125' class='date'>{{ response.date }}</td>
-                <td class='prompt' contenteditable='true'>>{{ response.prompt }}</td>
+                <td class='prompt' contenteditable='true'>{{ response.prompt }}</td>
               </tr>
               {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
                 <td class='response' colspan=2 contenteditable='true'>{{ response.response }}</td>
@@ -59,8 +45,4 @@
             {% endfor %}
           </table>
 
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+{% endblock %}
