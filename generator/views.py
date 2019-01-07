@@ -12,7 +12,7 @@ def homepage(request):
     today_date = dt.datetime.now().date()
     today_date_lg = dt.datetime.strftime(today_date, '%B %d, %Y')
     today_date_st = dt.datetime.strftime(today_date, '%y-%m-%d')
-    responses = Response.objects.all()
+    responses = Response.objects.all()[::-1]
 
     form = DailyForm()
     form.fields['prompt'].widget.attrs['placeholder'] = 'Q: ' + prompt
@@ -44,7 +44,7 @@ def review(request):
             )
 
     # Collect responses
-    responses = Response.objects.all()
+    responses = Response.objects.all()[::-1]
 
     return render(request, 'review.html',
                     {'responses':
