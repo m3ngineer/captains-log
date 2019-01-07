@@ -53,3 +53,21 @@ def review(request):
                         today_date_lg,
                     }
                 )
+def delete(request, response_id):
+
+    today_date = dt.datetime.now().date()
+    today_date_lg = dt.datetime.strftime(today_date, '%B %d, %Y')
+    today_date_st = dt.datetime.strftime(today_date, '%y-%m-%d')
+
+    Response.objects.get(id=response_id).delete()
+
+    # Collect responses
+    responses = Response.objects.all()[::-1]
+
+    return render(request, 'review.html',
+                    {'responses':
+                        responses,
+                    'today_date_lg':
+                        today_date_lg,
+                    }
+                )
