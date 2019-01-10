@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from run import DiscoveryGenerator
 from generator.models import Response
 import datetime as dt
+import pytz
 
 from .forms import DailyForm
 
@@ -9,9 +10,11 @@ def homepage(request):
     prompts = DiscoveryGenerator()
     prompt = prompts.choose()
 
-    today_date = dt.datetime.now().date()
-    today_date_lg = dt.datetime.strftime(today_date, '%B %d, %Y')
-    today_date_st = dt.datetime.strftime(today_date, '%y-%m-%d')
+    utc_now = pytz.utc.localize(dt.datetime.utcnow())
+    pst_now = utc_now.astimezone(pytz.timezone("America/New_York"))
+
+    today_date_lg = pst_now.strftime('%B %d, %Y')
+    today_date_st = pst_now.strftime('%y-%m-%d')
     responses = Response.objects.all()[::-1]
 
     form = DailyForm()
@@ -30,9 +33,14 @@ def homepage(request):
 
 def review(request):
 
-    today_date = dt.datetime.now().date()
-    today_date_lg = dt.datetime.strftime(today_date, '%B %d, %Y')
-    today_date_st = dt.datetime.strftime(today_date, '%y-%m-%d')
+    # today_date = dt.datetime.now().date()
+    # today_date_lg = dt.datetime.strftime(today_date, '%B %d, %Y')
+    # today_date_st = dt.datetime.strftime(today_date, '%y-%m-%d')
+    utc_now = pytz.utc.localize(dt.datetime.utcnow())
+    pst_now = utc_now.astimezone(pytz.timezone("America/New_York"))
+
+    today_date_lg = pst_now.strftime('%B %d, %Y')
+    today_date_st = pst_now.strftime('%y-%m-%d')
 
     form = DailyForm(request.POST)
 
@@ -55,9 +63,11 @@ def review(request):
                 )
 def delete(request, response_id):
 
-    today_date = dt.datetime.now().date()
-    today_date_lg = dt.datetime.strftime(today_date, '%B %d, %Y')
-    today_date_st = dt.datetime.strftime(today_date, '%y-%m-%d')
+    utc_now = pytz.utc.localize(dt.datetime.utcnow())
+    pst_now = utc_now.astimezone(pytz.timezone("America/New_York"))
+
+    today_date_lg = pst_now.strftime('%B %d, %Y')
+    today_date_st = pst_now.strftime('%y-%m-%d')
 
     Response.objects.get(id=response_id).delete()
 

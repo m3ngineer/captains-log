@@ -19,5 +19,6 @@ from generator import views
 
 urlpatterns = [
     url(r'^$', views.homepage, name='homepage'),
-    url(r'^review$', views.review, name='review')
+    url(r'^review$', views.review, name='review'),
+    url(r'^(\d+)/delete$', views.delete, name='delete'),
 ]
