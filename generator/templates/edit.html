@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block css %}{% endblock %}
+
+{% block date %}{{ today_date_lg }}{% endblock %}
+
+{% block form %}
+<h2>Entries</h2>
+{% endblock %}
+
+{% block table %}
+
+          <table id='response_table'>
+            {% for response in responses %}
+
+              {% if response.id  == response_id %}
+                <form id='form_update' action="/{{ response.id }}/update" method="POST">
+              {% else %}
+                <form id='form_edit' action="/{{ response.id }}/edit" method="GET">
+              {% endif %}
+                  {% csrf_token %}
+
+                {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
+                  <td width='125' class='date'>
+                    {% if response.id  == response_id %}<input form='form_update' value='{{ response.date }}' name='date'>{%else%}{{ response.date }}{% endif %}
+                  </td>
+                  <td class='prompt'>
+                    {% if response.id  == response_id %}<input form='form_update' value='{{ response.prompt }}' name='prompt'>{%else%}{{ response.prompt }}{% endif %}
+                  </td>
+                  <td width='100'>
+                      {% if response.id  == response_id %}
+                        <button form='form_update' type='submit' value='update'>Update</button>
+                      {% else %}
+                        <button form='form_edit' type='submit' value='edit'>Edit</button>
+                      {% endif %}
+
+                    <form action="/{{ response.id }}/delete" method="DELETE">
+                      <button type='submit' id='Delete'>Del</button>
+                    </form>
+                  </td>
+                </tr>
+                {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
+                  <td class='response' colspan=3>
+                    {% if response.id  == response_id %}<input form='form_update' value='{{ response.response }}' name='response'>{%else%}{{ response.response }}{% endif %}
+                  </td>
+                </tr>
+                </form>
+            {% endfor %}
+          </table>
+
+{% endblock %}

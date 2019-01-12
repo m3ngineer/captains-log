@@ -14,16 +14,19 @@
             {% for response in responses %}
               {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
                 <td width='125' class='date'>{{ response.date }}</td>
-                <td class='prompt' contenteditable='true'>{{ response.prompt }}</td>
+                <td class='prompt'>{{ response.prompt }}</td>
                 <td width='100'>
-                  <button type='submit' value='Edit'>Edit</button>
+                  <form action="/{{ response.id }}/edit" method="POST">
+                    {% csrf_token %}
+                    <button type='submit' value='Edit'>Edit</button>
+                  </form>
                   <form action="/{{ response.id }}/delete" method="DELETE">
                     <button type='submit' id='Delete'>Del</button>
                   </form>
                 </td>
               </tr>
               {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
-                <td class='response' colspan=3 contenteditable='true'>{{ response.response }}</td>
+                <td class='response' colspan=3>{{ response.response }}</td>
               </tr>
             {% endfor %}
           </table>

@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^$', views.homepage, name='homepage'),
     url(r'^review$', views.review, name='review'),
     url(r'^(\d+)/delete$', views.delete, name='delete'),
+    url(r'^(\d+)/edit$', views.edit, name='edit'),
+    url(r'^(\d+)/update$', views.update, name='update'),
 ]

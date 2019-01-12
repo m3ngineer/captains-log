@@ -81,3 +81,53 @@ def delete(request, response_id):
                         today_date_lg,
                     }
                 )
+
+def edit(request, response_id):
+
+    utc_now = pytz.utc.localize(dt.datetime.utcnow())
+    pst_now = utc_now.astimezone(pytz.timezone("America/New_York"))
+
+    today_date_lg = pst_now.strftime('%B %d, %Y')
+    today_date_st = pst_now.strftime('%y-%m-%d')
+
+    # Response.objects.get(id=response_id)
+
+    # Collect responses
+    responses = Response.objects.all()[::-1]
+
+    return render(request, 'edit.html',
+                    {'responses':
+                        responses,
+                    'response_id':
+                        int(response_id),
+                    'today_date_lg':
+                        today_date_lg,
+                    }
+                )
+
+def update(request, response_id):
+
+    utc_now = pytz.utc.localize(dt.datetime.utcnow())
+    pst_now = utc_now.astimezone(pytz.timezone("America/New_York"))
+
+    today_date_lg = pst_now.strftime('%B %d, %Y')
+    today_date_st = pst_now.strftime('%y-%m-%d')
+
+    Response.objects.filter(id=response_id).update(date=request.POST['date'],
+                                                    prompt=request.POST['prompt'],
+                                                    response=request.POST['response'])
+    # new_response.prompt = 'updated value'
+    response_id = -1
+
+    # Collect responses
+    responses = Response.objects.all()[::-1]
+
+    return render(request, 'review.html',
+                    {'responses':
+                        responses,
+                    'response_id':
+                        -1,
+                    'today_date_lg':
+                        today_date_lg,
+                    }
+                )
