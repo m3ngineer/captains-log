@@ -25,7 +25,9 @@ SECRET_KEY = 'vs72m87$#h6#3z^-16_s#4nteh%*2t@028u1!!k0nw%=8-^!ju'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '.execute-api.us-east-1.amazonaws.com',
+    ]
 
 
 # Application definition
