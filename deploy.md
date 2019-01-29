@@ -19,11 +19,19 @@ In order to use Amazon services without traffic being rejected, an SSL certifica
   - INSERT IMAGE EXAMPLE
   - Select validation method. For DNS validation:
   - Amazon will provide a host and target. Copy these and create a new CNAME in your DNS service provider as directed. Your DNS service provider may add the domain to the host automatically. If this is the case you may need to remove the ending domain (eg, "ahds5mh6.engmatthew.com" would just be "ahds5mh6"). It can take several to 40 minutes for the CNAME to propagate.
-  - INSERT IMAGE EXAMPLE
+  - ![image](images/4.1-acm.png)
   - In Certificate Manager, complete the request for an SSL certificate by hitting `Confirm and request`
   - It will usually take several minutes to an hour to have your request approved. After 72 hours, if a request has not be approved, the request will automatically be cancelled. Ensure that your CNAME was created correctly.
 
 ### 3.2 Set up custom domain
  - Choose `Custom domain name` in API Gateway
  - Add a new custom domain name for each domain that you have
- - Take target domain name and create a new CNAME 
+ - Take target domain name and create a new CNAME in DNS service with the alias as the host and value as the target domain name. ![image](images/4.2-api-gateway.png)
+
+### Change security group rules on Lambda rule
+![image](images/3.3-sg-rules.png)
+![image](images/3.2-vpc.png)
+
+### Upload environment variables to Lambda
+
+![image](images/3.1-env-variables.png)
