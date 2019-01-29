@@ -20,13 +20,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'vs72m87$#h6#3z^-16_s#4nteh%*2t@028u1!!k0nw%=8-^!ju'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [
     '.execute-api.us-east-1.amazonaws.com',
+    '127.0.0.1',
+    'journal.engmatthew.com',
     ]
 
 
@@ -76,13 +78,23 @@ WSGI_APPLICATION = 'discover.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+#
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ["RDS_DB_NAME"],
+        'USER': os.environ["RDS_USERNAME"],
+        'PASSWORD': os.environ["RDS_PASSWORD"],
+        'HOST': os.environ["RDS_HOST"],
+        'PORT': os.environ["RDS_PORT"],
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

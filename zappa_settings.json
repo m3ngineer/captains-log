@@ -5,6 +5,16 @@
         "profile_name": "default",
         "project_name": "designr",
         "runtime": "python3.6",
-        "s3_bucket": "zappa-journal-2"
+        "s3_bucket": "zappa-journal-2",
+        "vpc_config" : {
+            "SubnetIds": [ "subnet-06bc105a",
+                            "subnet-15ab582b",
+                            "subnet-9c6310d6",
+                            "subnet-cd3d51c2",
+                            "subnet-44983523",
+                            "subnet-747fd15a",
+                          ],
+            "SecurityGroupIds": [ "sg-5e734815", "sg-0e630e4957b105106" ]
+        },
     }
 }
