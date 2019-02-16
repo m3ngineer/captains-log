@@ -22,10 +22,10 @@
 
                 {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
                   <td width='125' class='date'>
-                    {% if response.id  == response_id %}<input form='form_update' value='{{ response.date }}' name='date'>{%else%}{{ response.date }}{% endif %}
+                    {% if response.id  == response_id %}<input form='form_update' value='{{ response.date }}' name='date' class='edit-date form-control'>{%else%}{{ response.date }}{% endif %}
                   </td>
                   <td class='prompt'>
-                    {% if response.id  == response_id %}<input form='form_update' value='{{ response.prompt }}' name='prompt'>{%else%}{{ response.prompt }}{% endif %}
+                    {% if response.id  == response_id %}<input form='form_update' value='{{ response.prompt }}' name='prompt' class='edit-prompt form-control'>{%else%}{{ response.prompt }}{% endif %}
                   </td>
                   <td width='100'>
                       {% if response.id  == response_id %}
@@ -41,7 +41,7 @@
                 </tr>
                 {% if forloop.counter|divisibleby:2 %}<tr>{% else %}<tr class='grey-bg'>{% endif %}
                   <td class='response' colspan=3>
-                    {% if response.id  == response_id %}<input form='form_update' value='{{ response.response }}' name='response'>{%else%}{{ response.response }}{% endif %}
+                    {% if response.id  == response_id %}<textarea form='form_update' name='response'  class='edit-response form-control'>{{ response.response }}</textarea>{%else%}{{ response.response }}{% endif %}
                   </td>
                 </tr>
                 </form>
