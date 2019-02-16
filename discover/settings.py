@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'generator',
-    'django_s3_storage',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -133,40 +133,33 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+USE_S3_STATIC = os.environ['USE_S3_STATIC']
 
-## Static files from AWS S3
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-AWS_S3_BUCKET_NAME = 'journal-static'
-# AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
-# AWS_S3_OBJECT_PARAMETERS = {
-#     'CacheControl': 'max-age=86400',
-# }
-# AWS_LOCATION = 'static'
-#
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'generator/static'),
-# ]
+if USE_S3_STATIC:
+    ## Configure Django-storages to serve static files from AWS S3
+    # Django-storages uses S3 as main Django storage backend
+    # Boto3 used to interact with AWS API
+    FULL_DOMAIN = 'https://s3.amazonaws.com/journal-static'
 
-DEFAULT_FILE_STORAGE = "django_s3_storage.storage.S3Storage"
-STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
-AWS_REGION = "us-east-1"
+    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+    AWS_REGION = "us-east-1"
+    AWS_STORAGE_BUCKET_NAME = "journal-static"
+    AWS_BUCKET_ACL = None
 
-YOUR_S3_BUCKET = "journal-static"
+    # These next two lines will serve the static files directly
+    # from the s3 bucket
+    AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+    STATIC_URL = "https://{}/".format(AWS_S3_CUSTOM_DOMAIN)
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' # configures Django to automatically add static files to the S3 bucket when the collectstatic command is run
+    print(STATIC_URL)
 
-STATICFILES_STORAGE = "django_s3_storage.storage.StaticS3Storage"
-AWS_S3_BUCKET_NAME_STATIC = YOUR_S3_BUCKET
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# These next two lines will serve the static files directly
-# from the s3 bucket
-AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(YOUR_S3_BUCKET)
-STATIC_URL = "https://{}/".format(AWS_S3_CUSTOM_DOMAIN)
 
-# AWS_DEFAULT_ACL = None
-# STATIC_URL = 'https://{}/{}/'.format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
-## From PackIT
-# STATICFILES_STORAGE = 'discover.utils.StaticStorage'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'generator/static'),
+]
