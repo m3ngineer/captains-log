@@ -16,7 +16,7 @@
               {% if response.id  == response_id %}
                 <form id='form_update' action="/{{ response.id }}/update" method="POST">
               {% else %}
-                <form id='form_edit' action="/{{ response.id }}/edit" method="GET">
+                <form id='form_edit_{{response.id}}' action="/{{ response.id }}/edit" method="GET">
               {% endif %}
                   {% csrf_token %}
 
@@ -31,7 +31,7 @@
                       {% if response.id  == response_id %}
                         <button form='form_update' type='submit' value='update'>Update</button>
                       {% else %}
-                        <button form='form_edit' type='submit' value='edit'>Edit</button>
+                        <button form='form_edit_{{response.id}}' type='submit' value='edit'>Edit {{ response.id }}</button>
                       {% endif %}
 
                     <form action="/{{ response.id }}/delete" method="DELETE">
