@@ -1,3 +1,39 @@
+tr, td {
+  padding: 6px;
+}
+
+.response {
+  padding: 6px 18px;
+}
+
+.prompt {
+  font-style: italic;
+}
+
+.date {
+  font-weight: bold;
+}
+
+.grey-bg {
+  background: #e9ecef;
+}
+
 #id_new_item {
   margin-top: 2ex;
+}
+
+.edit-response {
+    width: 450px;
+    height: 150px;
+    padding: 5px;
+}
+
+.edit-date {
+  width: 100px;
+  padding: 5px;
+}
+
+.edit-prompt {
+  width: 340px;
+  padding: 5px;
 }
