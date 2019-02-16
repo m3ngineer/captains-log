@@ -132,6 +132,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
+# http://martinbrochhaus.com/s3.html
 
 USE_S3_STATIC = os.environ['USE_S3_STATIC']
 
@@ -145,14 +146,12 @@ if USE_S3_STATIC:
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
     AWS_REGION = "us-east-1"
     AWS_STORAGE_BUCKET_NAME = "journal-static"
-    AWS_BUCKET_ACL = None
+    AWS_LOCATION = 'static' # Prefix location to append to all uploaded static files to S3
 
-    # These next two lines will serve the static files directly
-    # from the s3 bucket
+    # Serve the static files directly from S3 bucket when via 'static' tag in template
     AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
-    STATIC_URL = "https://{}/".format(AWS_S3_CUSTOM_DOMAIN)
+    STATIC_URL = "https://{}/{}/".format(AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
     STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' # configures Django to automatically add static files to the S3 bucket when the collectstatic command is run
-    print(STATIC_URL)
 
 else:
     STATIC_URL = '/static/'
@@ -162,4 +161,4 @@ else:
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'generator/static'),
-]
+] # You can define a list of directories (STATICFILES_DIRS) in your settings file where Django will also look for static files
