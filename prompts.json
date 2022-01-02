@@ -1,5 +1,5 @@
 {
-  "prompts": [
+   "prompts":[
       "What do you do?",
       "What are you looking forward to this week?",
       "What's your goal this week?",
@@ -17,6 +17,10 @@
       "What's the next thing that you want to learn? To what degree?",
       "What are your values?",
       "What's a book you wish someone would right?",
-      "Who do you want to serve?"
+      "Who do you want to serve?",
+      "What are you going to do today to accomplish your why?",
+      "What is holding you back?",
+      "What will you do today that will strengthen your existing communities, or build new ones?",
+      "Who is one person that you can reach out to?"
     ]
 }

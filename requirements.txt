@@ -6,6 +6,7 @@ cfn-flip==1.1.0.post1
 chardet==3.0.4
 Click==7.0
 Django==2.1.5
+django-storages==1.12.3
 docutils==0.14
 durationpy==0.5
 future==0.16.0
